@@ -1,0 +1,52 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-5d32d44d69ab852278d9880d6acdd12bdcba2eff",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.17.0"
+  },
+  "userSourceNameMap": {
+    "contracts/oraculo_humedad/HumedadOraculo.sol": "project/contracts/oraculo_humedad/HumedadOraculo.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/oraculo_humedad/HumedadInterface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface HumedadInterface {\r\n    function humedadActual() external view returns (int256 humedad, uint256 actualizado);\r\n}"
+      },
+      "project/contracts/oraculo_humedad/HumedadOraculo.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\nimport {HumedadInterface} from \"./HumedadInterface.sol\";\r\n\r\ncontract HumedadOraculo is HumedadInterface {\r\n    address public admin;\r\n    int256 private humedad;   \r\n    uint256 private actualizado;  \r\n    \r\n    int256 public constant MINIMO = 0; \r\n    int256 public constant MAXIMO = 100; \r\n\r\n    event HumedadActualizada(int256 porcentajeHumedad, uint256 actualizado);\r\n    event AdminCambiado(address anterior, address nuevo);\r\n\r\n    error NoEsAdmin();\r\n    error FueraDeRango(int256 valor);\r\n    error SinDatos();\r\n\r\n    modifier soloAdmin() {\r\n        if (msg.sender != admin) revert NoEsAdmin();\r\n        _;\r\n    }\r\n\r\n    constructor() {\r\n        admin = msg.sender;\r\n    }\r\n\r\n    function actualizarHumedad(int256 porcentajeHumedad) external soloAdmin {\r\n        if (porcentajeHumedad < MINIMO || porcentajeHumedad > MAXIMO) revert FueraDeRango(porcentajeHumedad);\r\n        humedad = porcentajeHumedad;\r\n        actualizado = block.timestamp;\r\n        emit HumedadActualizada(porcentajeHumedad, block.timestamp);\r\n    }\r\n\r\n    function humedadActual() external view override returns (int256, uint256) {\r\n        if (actualizado == 0) revert SinDatos();\r\n        return (humedad, actualizado);\r\n    }\r\n}"
+      }
+    }
+  }
+}

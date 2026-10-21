@@ -1,0 +1,135 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "CambioOraculo",
+  "sourceName": "contracts/oraculo cambio/CambioOraculo.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "valor",
+          "type": "int256"
+        }
+      ],
+      "name": "FueraDeRango",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoEsAdmin",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "SinDatos",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "anterior",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "nuevo",
+          "type": "address"
+        }
+      ],
+      "name": "AdminCambiado",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "int256",
+          "name": "monto",
+          "type": "int256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "actualizado",
+          "type": "uint256"
+        }
+      ],
+      "name": "CambioActualizado",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "MINIMO",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "nuevoCambio",
+          "type": "int256"
+        }
+      ],
+      "name": "actualizarCambio",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cambioActual",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600e575f5ffd5b505f80546001600160a01b03191633179055600c600155426002556101da806100365f395ff3fe608060405234801561000f575f5ffd5b506004361061004a575f3560e01c80633276feed1461004e578063e3c23c7f14610068578063e62c28de14610085578063f851a4401461009a575b5f5ffd5b6100555f81565b6040519081526020015b60405180910390f35b6100706100c4565b6040805192835260208301919091520161005f565b61009861009336600461018d565b6100f4565b005b5f546100ac906001600160a01b031681565b6040516001600160a01b03909116815260200161005f565b5f5f6002545f036100e857604051634e9994c960e01b815260040160405180910390fd5b50506001546002549091565b5f546001600160a01b0316331461011e576040516313ee6b8b60e11b815260040160405180910390fd5b5f811361014557604051631846d62360e01b81526004810182905260240160405180910390fd5b60018190554260028190556040805183815260208101929092527fabf8ac28f6738a2d3746d827cdae6ba5a21a13e011fdba9a75b7aedc8737ffc1910160405180910390a150565b5f6020828403121561019d575f5ffd5b503591905056fea264697066735822122038679987a6d76ed3f6e7214dc931b9251f633f9f9364284b6ba46d7eed9b2a7b64736f6c63430008220033",
+  "deployedBytecode": "0x608060405234801561000f575f5ffd5b506004361061004a575f3560e01c80633276feed1461004e578063e3c23c7f14610068578063e62c28de14610085578063f851a4401461009a575b5f5ffd5b6100555f81565b6040519081526020015b60405180910390f35b6100706100c4565b6040805192835260208301919091520161005f565b61009861009336600461018d565b6100f4565b005b5f546100ac906001600160a01b031681565b6040516001600160a01b03909116815260200161005f565b5f5f6002545f036100e857604051634e9994c960e01b815260040160405180910390fd5b50506001546002549091565b5f546001600160a01b0316331461011e576040516313ee6b8b60e11b815260040160405180910390fd5b5f811361014557604051631846d62360e01b81526004810182905260240160405180910390fd5b60018190554260028190556040805183815260208101929092527fabf8ac28f6738a2d3746d827cdae6ba5a21a13e011fdba9a75b7aedc8737ffc1910160405180910390a150565b5f6020828403121561019d575f5ffd5b503591905056fea264697066735822122038679987a6d76ed3f6e7214dc931b9251f633f9f9364284b6ba46d7eed9b2a7b64736f6c63430008220033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/oraculo cambio/CambioOraculo.sol",
+  "buildInfoId": "solc-0_8_34-bfc0da5a350841b6d744699299ede41e6fe1b7b0"
+}

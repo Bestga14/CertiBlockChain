@@ -1,0 +1,58 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-6c14670a2fde4dcac366ed7c127436af5bbdbb00",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.17.0"
+  },
+  "userSourceNameMap": {
+    "contracts/TiendaHelado.sol": "project/contracts/TiendaHelado.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/oraculo cambio/AggregatorV3Interface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface AggregatorV3Interface {\r\n    function decimals() external view returns (uint8);\r\n    function description() external view returns (string memory);\r\n    function latestRoundData()\r\n        external\r\n        view\r\n        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);\r\n}"
+      },
+      "project/contracts/oraculo_humedad/HumedadInterface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface HumedadInterface {\r\n    function humedadActual() external view returns (int256 humedad, uint256 actualizado);\r\n}"
+      },
+      "project/contracts/oraculo_temperatura/TemperaturaInterface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface TemperaturaInterface {\r\n    function temperaturaActual() external view returns (int256 decimasGrado, uint256 actualizado);\r\n}"
+      },
+      "project/contracts/TiendaHelado.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\nimport {TemperaturaInterface} from \"./oraculo_temperatura/TemperaturaInterface.sol\";\r\nimport {HumedadInterface} from \"./oraculo_humedad/HumedadInterface.sol\";\r\nimport {AggregatorV3Interface} from \"./oraculo cambio/AggregatorV3Interface.sol\";\r\n\r\ncontract TiendaHelado {\r\n    TemperaturaInterface public immutable oraculoTemp;\r\n    HumedadInterface public immutable oraculoHumedad;\r\n    AggregatorV3Interface public immutable oraculoEthUsd;\r\n\r\n    address public immutable admin;\r\n\r\n    uint256 public constant PRECIO_HELADO_USD = 2;  \r\n    uint256 public constant ANTIGUEDAD_MAXIMA = 1 hours;\r\n    int256 public constant TEMPERATURA_DESCUENTO = 150; // Si es menor = descuento\r\n    int256 public constant HUMEDAD_DESCUENTO = 50; // Si es mayor = descuento\r\n\r\n    mapping(address => uint256) public heladosComprados;\r\n\r\n    event Compra(address indexed comprador, uint256 helados, uint256 pagadoWei, int256 precioEthUsd);\r\n\r\n    error PrecioInvalido();\r\n    error PrecioDesactualizado(uint256 actualizadoHace);\r\n    error TempDesactualizado(uint256 actualizadoHace);\r\n    error HumDesactualizado(uint256 actualizadoHace);\r\n    error PagoInsuficiente(uint256 requerido, uint256 enviado);\r\n    error NoEsAdmin();\r\n    error TransferenciaFallida();\r\n\r\n    constructor(address direccionOraculoTemp, address direccionOraculoHumedad, address direccionOraculoEthUsd) {\r\n        oraculoTemp = TemperaturaInterface(direccionOraculoTemp);\r\n        oraculoHumedad = HumedadInterface(direccionOraculoHumedad);\r\n        oraculoEthUsd = AggregatorV3Interface(direccionOraculoEthUsd);\r\n        admin = msg.sender;\r\n    }\r\n\r\n    function precioEthUsd() public view returns (int256) {\r\n        (, int256 precio,, uint256 actualizado,) = oraculoEthUsd.latestRoundData();\r\n        if (precio <= 0) revert PrecioInvalido();\r\n        if (block.timestamp - actualizado > ANTIGUEDAD_MAXIMA) {\r\n            revert PrecioDesactualizado(block.timestamp - actualizado);\r\n        }\r\n        return precio;\r\n    }\r\n\r\n    function costoHeladoEnWei() public view returns (uint256) {\r\n        (int256 decimasGrado, uint256 actualizadoTemp) = oraculoTemp.temperaturaActual();\r\n        (int256 humedad, uint256 actualizadoHum) = oraculoHumedad.humedadActual();\r\n\r\n        if (block.timestamp - actualizadoTemp > ANTIGUEDAD_MAXIMA) {\r\n            revert TempDesactualizado(block.timestamp - actualizadoTemp);\r\n        }\r\n\r\n        if (block.timestamp - actualizadoHum > ANTIGUEDAD_MAXIMA) {\r\n            revert HumDesactualizado(block.timestamp - actualizadoHum);\r\n        }\r\n\r\n        if (decimasGrado < TEMPERATURA_DESCUENTO || humedad > HUMEDAD_DESCUENTO) {\r\n            return ((PRECIO_HELADO_USD/2) * 1e8) / uint256(precioEthUsd());\r\n        }\r\n        return (PRECIO_HELADO_USD * 1e8) / uint256(precioEthUsd());\r\n    }\r\n\r\n    function comprar(uint256 cantidad) external payable {\r\n        uint256 costo = costoHeladoEnWei() * cantidad;\r\n        if (msg.value < costo) revert PagoInsuficiente(costo, msg.value);\r\n\r\n        heladosComprados[msg.sender] += cantidad;\r\n        emit Compra(msg.sender, cantidad, costo, precioEthUsd());\r\n\r\n        uint256 vuelto = msg.value - costo;\r\n        if (vuelto > 0) {\r\n            (bool ok,) = msg.sender.call{value: vuelto}(\"\");\r\n            if (!ok) revert TransferenciaFallida();\r\n        }\r\n    }\r\n\r\n    function retirar() external {\r\n        if (msg.sender != admin) revert NoEsAdmin();\r\n        (bool ok,) = admin.call{value: address(this).balance}(\"\");\r\n        if (!ok) revert TransferenciaFallida();\r\n    }\r\n}"
+      }
+    }
+  }
+}

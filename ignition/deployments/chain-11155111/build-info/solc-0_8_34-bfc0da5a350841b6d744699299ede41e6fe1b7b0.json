@@ -1,0 +1,52 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-bfc0da5a350841b6d744699299ede41e6fe1b7b0",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.17.0"
+  },
+  "userSourceNameMap": {
+    "contracts/oraculo cambio/CambioOraculo.sol": "project/contracts/oraculo cambio/CambioOraculo.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/oraculo cambio/CambioInterface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface CambioInterface {\r\n    function cambioActual() external view returns (int256 monto, uint256 actualizado);\r\n}"
+      },
+      "project/contracts/oraculo cambio/CambioOraculo.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\nimport {CambioInterface} from \"./CambioInterface.sol\";\r\n\r\ncontract CambioOraculo is CambioInterface {\r\n    address public admin;\r\n    int256 private monto;   // la temperatura en décimas de grado Celsius (por ejemplo, 215 = 21,5 °C)\r\n    uint256 private actualizado;  // fecha y hora de la actualización en formato timestamp\r\n\r\n    int256 public constant MINIMO = 0; // -90,0 °C\r\n    //int256 public constant MAXIMO = 600;  //  60,0 °C\r\n\r\n    event CambioActualizado(int256 monto, uint256 actualizado);\r\n    event AdminCambiado(address anterior, address nuevo);\r\n\r\n    error NoEsAdmin();\r\n    error FueraDeRango(int256 valor);\r\n    error SinDatos();\r\n\r\n    modifier soloAdmin() {\r\n        if (msg.sender != admin) revert NoEsAdmin();\r\n        _;\r\n    }\r\n\r\n    constructor() {\r\n        admin = msg.sender;\r\n        monto = 12;\r\n        actualizado = block.timestamp;\r\n    }\r\n\r\n    function actualizarCambio(int256 nuevoCambio) external soloAdmin {\r\n        if (nuevoCambio <= MINIMO) revert FueraDeRango(nuevoCambio);\r\n        monto = nuevoCambio;\r\n        actualizado = block.timestamp;\r\n        emit CambioActualizado(nuevoCambio, block.timestamp);\r\n    }\r\n\r\n    function cambioActual() external view override returns (int256, uint256) {\r\n        if (actualizado == 0) revert SinDatos();\r\n        return (monto, actualizado);\r\n    }\r\n}"
+      }
+    }
+  }
+}

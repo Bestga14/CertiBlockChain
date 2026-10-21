@@ -1,0 +1,148 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "TemperaturaOraculo",
+  "sourceName": "contracts/oraculo_temperatura/TemperaturaOraculo.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "valor",
+          "type": "int256"
+        }
+      ],
+      "name": "FueraDeRango",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoEsAdmin",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "SinDatos",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "anterior",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "nuevo",
+          "type": "address"
+        }
+      ],
+      "name": "AdminCambiado",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "int256",
+          "name": "decimasGrado",
+          "type": "int256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "actualizado",
+          "type": "uint256"
+        }
+      ],
+      "name": "TemperaturaActualizada",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "MAXIMO",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MINIMO",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "decimasGrado",
+          "type": "int256"
+        }
+      ],
+      "name": "actualizarTemperatura",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "temperaturaActual",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600e575f5ffd5b505f80546001600160a01b0319163317905560c860015542600255610201806100365f395ff3fe608060405234801561000f575f5ffd5b5060043610610055575f3560e01c80633276feed1461005957806367703c9c14610076578063c513cda81461007f578063f10ab82c14610094578063f851a440146100b1575b5f5ffd5b6100636103831981565b6040519081526020015b60405180910390f35b61006361025881565b61009261008d3660046101b4565b6100db565b005b61009c610184565b6040805192835260208301919091520161006d565b5f546100c3906001600160a01b031681565b6040516001600160a01b03909116815260200161006d565b5f546001600160a01b03163314610105576040516313ee6b8b60e11b815260040160405180910390fd5b61038319811280610117575061025881135b1561013c57604051631846d62360e01b81526004810182905260240160405180910390fd5b60018190554260028190556040805183815260208101929092527f73ee33c24244b3448a2aaef288525b2a34dbfb6db5298481d4c74e425975062e910160405180910390a150565b5f5f6002545f036101a857604051634e9994c960e01b815260040160405180910390fd5b50506001546002549091565b5f602082840312156101c4575f5ffd5b503591905056fea26469706673582212202b787e48bbf4aa829b2c76579bb32460a066dbced76cd5b44ea81f3df5f1569a64736f6c63430008220033",
+  "deployedBytecode": "0x608060405234801561000f575f5ffd5b5060043610610055575f3560e01c80633276feed1461005957806367703c9c14610076578063c513cda81461007f578063f10ab82c14610094578063f851a440146100b1575b5f5ffd5b6100636103831981565b6040519081526020015b60405180910390f35b61006361025881565b61009261008d3660046101b4565b6100db565b005b61009c610184565b6040805192835260208301919091520161006d565b5f546100c3906001600160a01b031681565b6040516001600160a01b03909116815260200161006d565b5f546001600160a01b03163314610105576040516313ee6b8b60e11b815260040160405180910390fd5b61038319811280610117575061025881135b1561013c57604051631846d62360e01b81526004810182905260240160405180910390fd5b60018190554260028190556040805183815260208101929092527f73ee33c24244b3448a2aaef288525b2a34dbfb6db5298481d4c74e425975062e910160405180910390a150565b5f5f6002545f036101a857604051634e9994c960e01b815260040160405180910390fd5b50506001546002549091565b5f602082840312156101c4575f5ffd5b503591905056fea26469706673582212202b787e48bbf4aa829b2c76579bb32460a066dbced76cd5b44ea81f3df5f1569a64736f6c63430008220033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/oraculo_temperatura/TemperaturaOraculo.sol",
+  "buildInfoId": "solc-0_8_34-eace1f79033197da109b291f8cd79dc8d44076a0"
+}

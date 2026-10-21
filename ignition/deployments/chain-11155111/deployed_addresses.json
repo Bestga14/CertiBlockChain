@@ -1,0 +1,16 @@
+{
+  "PolloModule#Pollo": "0x1a9c9E9C4254dC17f82026E2e407Af2E0E43D5A0",
+  "ContadorProxyModule#LibroV1": "0xc8622A87be10CA78e25a3C2e17699dC394b41597",
+  "ContadorProxyModule#ContadorProxy": "0x7c00bBD9eA415CbF81F6CA053419327Abe30eeEb",
+  "ContadorProxyModule#ContadorV1EnProxy": "0x7c00bBD9eA415CbF81F6CA053419327Abe30eeEb",
+  "ContadorUpgradeModule#ContadorV2EnProxy": "0x7c00bBD9eA415CbF81F6CA053419327Abe30eeEb",
+  "ContadorUpgradeModule#LibroV2": "0xecC1fD79Dc9fC001aD3d86C53a7DefeBc28945c3",
+  "CambioOraculo#CambioOraculo": "0xcB0c5e6155A60ce2d49cE708F845E61Dc4d32BB9",
+  "VidaOraculo#VidaOraculo": "0x48f227419979eA665546eEA94C8af7C73a299d64",
+  "HumedadOraculo#HumedadOraculo": "0x4FF2F4F4BD5bE35663B7021CdE7d0E5B086C3099",
+  "SiloModule#GuardarEnBodega": "0xE04BD4cfD115b2700499DE01CDE415a6944fB153",
+  "TemperaturaOraculoModule#TemperaturaOraculo": "0x2CAc1dB647B421bcFBeF90A610973Cb6ac605E37",
+  "TiendaHeladoModule#TiendaHelado": "0xCdDAbFE6F65a0D2C81EeC22f8CeE6112680b0fBF",
+  "TiendaHeladoModuleV2#TiendaHelado": "0x1AC3EE287cc5CB493c484Ca96244D1a90286959D",
+  "TiendaHeladoModuleV3#TiendaHelado": "0xE18fC252ba4f773D7972c35E32C4d1d3b2F34216"
+}

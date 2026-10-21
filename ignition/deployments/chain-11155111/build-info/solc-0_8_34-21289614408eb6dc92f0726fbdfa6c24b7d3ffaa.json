@@ -1,0 +1,52 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-21289614408eb6dc92f0726fbdfa6c24b7d3ffaa",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.17.0"
+  },
+  "userSourceNameMap": {
+    "contracts/oraculo_vida/VidaOraculo.sol": "project/contracts/oraculo_vida/VidaOraculo.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/oraculo_vida/VidaInterface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface VidaInterface {\r\n    function estaVivo(address persona) external view returns (bool vivo, uint256 actualizado);\r\n}"
+      },
+      "project/contracts/oraculo_vida/VidaOraculo.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\nimport {VidaInterface} from \"./VidaInterface.sol\";\r\n\r\ncontract VidaOraculo is VidaInterface {\r\n    address public admin;\r\n\r\n    struct Persona {\r\n        bool vivo;   \r\n        uint256 actualizado;\r\n    }\r\n\r\n    mapping(address => Persona) private personas;\r\n\r\n    event PersonaAgregada(address indexed walletPersona);\r\n    event estadoActualizado(bool vivo, uint256 actualizado);\r\n    event AdminCambiado(address anterior, address nuevo);\r\n\r\n    error NoEsAdmin();\r\n    error SinDatos();\r\n    error DireccionInvalida();\r\n    error NoSePuedeRevivir();\r\n    error PersonaNoExiste();\r\n\r\n    // ─── Constructor ────────────────────────────────────────\r\n    constructor() {\r\n        admin = msg.sender;\r\n    }\r\n\r\n    modifier soloAdmin() {\r\n        if (msg.sender != admin) revert NoEsAdmin();\r\n        _;\r\n    }\r\n\r\n    // ─── Administración ─────────────────────────────────────\r\n    function agregarPersona(address walletPersona) external soloAdmin {\r\n        if (walletPersona == address(0)) revert DireccionInvalida();\r\n        personas[walletPersona] = Persona({\r\n            vivo: true,\r\n            actualizado: uint256(block.timestamp)\r\n        });\r\n        emit PersonaAgregada(walletPersona);\r\n    }\r\n\r\n    function actualizarEstado(address walletPersona, bool estado) external soloAdmin {\r\n        if (walletPersona == address(0)) revert DireccionInvalida();\r\n        Persona storage per = personas[walletPersona];\r\n        if (estado == true && per.vivo == false) {\r\n            revert NoSePuedeRevivir();\r\n        } \r\n\r\n        if (estado == true && per.vivo == true) {\r\n            per.actualizado = uint256(block.timestamp);\r\n        } else {\r\n            per.vivo = estado;\r\n            per.actualizado = uint256(block.timestamp);\r\n        }\r\n\r\n        emit estadoActualizado(per.vivo, per.actualizado);\r\n    }\r\n\r\n    function estaVivo(address walletPersona) external view override returns (bool, uint256) {\r\n        if (walletPersona == address(0)) revert DireccionInvalida();\r\n        Persona memory per = personas[walletPersona];\r\n        if (per.actualizado == 0) revert PersonaNoExiste();\r\n        \r\n        return (per.vivo, per.actualizado);\r\n    }\r\n}"
+      }
+    }
+  }
+}
