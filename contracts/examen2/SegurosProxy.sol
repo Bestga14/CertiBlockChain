@@ -8,5 +8,6 @@ import {ERC1967Proxy} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.s
 contract SegurosProxy is ERC1967Proxy {
     constructor(address implementacion, bytes memory datosInicializacion)
         ERC1967Proxy(implementacion, datosInicializacion)
+        
     {}
 }

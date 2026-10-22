@@ -5,13 +5,12 @@ import {GobiernoInterface} from "./GobiernoInterface.sol";
 
 contract OraculoGobierno is GobiernoInterface {
     address public admin;
-    int256 private precipitacion;   
-    uint256 private fecha;  
 
     int256 public constant MINIMO = 0;
 
     struct Precip {
         int256 precip;
+        bool existe;
     }
 
     mapping(uint256 => Precip) private precipitacionObj;
@@ -34,14 +33,19 @@ contract OraculoGobierno is GobiernoInterface {
 
     function registrarPrecipitacion(int256 precipitacionHoy) external soloAdmin {
         if (precipitacionHoy < MINIMO) revert FueraDeRango(precipitacionHoy);
+
         precipitacionObj[block.timestamp] = Precip({
-            precip: precipitacionHoy 
+            precip: precipitacionHoy,
+            existe: true
         });
+
         emit PrecipitacionRegistrada(precipitacionHoy, block.timestamp);
     }
 
     function precipitacionPorFecha(uint256 fecha) external view override returns (int256) {
-        if (fecha == 0) revert SinDatos();
-        return (precipitacion);
+        Precip memory p = precipitacionObj[fecha];
+        if (!p.existe) revert SinDatos();
+        
+        return p.precip;
     }
 }

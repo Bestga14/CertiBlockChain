@@ -1,0 +1,52 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-9fe1413e455e39c25a841697f1b2df435a06ffb9",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.17.0"
+  },
+  "userSourceNameMap": {
+    "contracts/examen2/OraculoGobierno.sol": "project/contracts/examen2/OraculoGobierno.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/examen2/GobiernoInterface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ninterface GobiernoInterface {\r\n    function precipitacionPorFecha(uint256 fecha) external view returns (int256 precipitacion);\r\n}"
+      },
+      "project/contracts/examen2/OraculoGobierno.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\nimport {GobiernoInterface} from \"./GobiernoInterface.sol\";\r\n\r\ncontract OraculoGobierno is GobiernoInterface {\r\n    address public admin;\r\n\r\n    int256 public constant MINIMO = 0;\r\n\r\n    struct Precip {\r\n        int256 precip;\r\n        bool existe;\r\n    }\r\n\r\n    mapping(uint256 => Precip) private precipitacionObj;\r\n\r\n    event PrecipitacionRegistrada(int256 precipitacionHoy, uint256 fecha);\r\n    event AdminCambiado(address anterior, address nuevo);\r\n\r\n    error NoEsAdmin();\r\n    error FueraDeRango(int256 valor);\r\n    error SinDatos();\r\n\r\n    modifier soloAdmin() {\r\n        if (msg.sender != admin) revert NoEsAdmin();\r\n        _;\r\n    }\r\n\r\n    constructor() {\r\n        admin = msg.sender;\r\n    }\r\n\r\n    function registrarPrecipitacion(int256 precipitacionHoy) external soloAdmin {\r\n        if (precipitacionHoy < MINIMO) revert FueraDeRango(precipitacionHoy);\r\n\r\n        precipitacionObj[block.timestamp] = Precip({\r\n            precip: precipitacionHoy,\r\n            existe: true\r\n        });\r\n\r\n        emit PrecipitacionRegistrada(precipitacionHoy, block.timestamp);\r\n    }\r\n\r\n    function precipitacionPorFecha(uint256 fecha) external view override returns (int256) {\r\n        Precip memory p = precipitacionObj[fecha];\r\n        if (!p.existe) revert SinDatos();\r\n        \r\n        return p.precip;\r\n    }\r\n}"
+      }
+    }
+  }
+}

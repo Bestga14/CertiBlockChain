@@ -1,0 +1,136 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "OraculoGobierno",
+  "sourceName": "contracts/examen2/OraculoGobierno.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "valor",
+          "type": "int256"
+        }
+      ],
+      "name": "FueraDeRango",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoEsAdmin",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "SinDatos",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "anterior",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "nuevo",
+          "type": "address"
+        }
+      ],
+      "name": "AdminCambiado",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "int256",
+          "name": "precipitacionHoy",
+          "type": "int256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fecha",
+          "type": "uint256"
+        }
+      ],
+      "name": "PrecipitacionRegistrada",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "MINIMO",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fecha",
+          "type": "uint256"
+        }
+      ],
+      "name": "precipitacionPorFecha",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "precipitacionHoy",
+          "type": "int256"
+        }
+      ],
+      "name": "registrarPrecipitacion",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600e575f5ffd5b505f80546001600160a01b0319163317905561021a8061002d5f395ff3fe608060405234801561000f575f5ffd5b506004361061004a575f3560e01c80633276feed1461004e578063671c2c0d146100685780637b835cca1461007b578063f851a44014610090575b5f5ffd5b6100555f81565b6040519081526020015b60405180910390f35b6100556100763660046101cd565b6100ba565b61008e6100893660046101cd565b610109565b005b5f546100a2906001600160a01b031681565b6040516001600160a01b03909116815260200161005f565b5f8181526001602081815260408084208151808301909252805482529092015460ff16151590820181905261010257604051634e9994c960e01b815260040160405180910390fd5b5192915050565b5f546001600160a01b03163314610133576040516313ee6b8b60e11b815260040160405180910390fd5b5f81121561015b57604051631846d62360e01b81526004810182905260240160405180910390fd5b60408051808201825282815260016020808301828152425f81815284845286902094518555905193909201805460ff1916931515939093179092558251848152918201527f4f8fdd35275059eb62763960b423d43f542156eb7fa1c83b9ea0ee07185108c8910160405180910390a150565b5f602082840312156101dd575f5ffd5b503591905056fea2646970667358221220d12018ab44ff221054bdfb8a66ef342a48591bd9c4bf7a6e8e8e656cf150f50c64736f6c63430008220033",
+  "deployedBytecode": "0x608060405234801561000f575f5ffd5b506004361061004a575f3560e01c80633276feed1461004e578063671c2c0d146100685780637b835cca1461007b578063f851a44014610090575b5f5ffd5b6100555f81565b6040519081526020015b60405180910390f35b6100556100763660046101cd565b6100ba565b61008e6100893660046101cd565b610109565b005b5f546100a2906001600160a01b031681565b6040516001600160a01b03909116815260200161005f565b5f8181526001602081815260408084208151808301909252805482529092015460ff16151590820181905261010257604051634e9994c960e01b815260040160405180910390fd5b5192915050565b5f546001600160a01b03163314610133576040516313ee6b8b60e11b815260040160405180910390fd5b5f81121561015b57604051631846d62360e01b81526004810182905260240160405180910390fd5b60408051808201825282815260016020808301828152425f81815284845286902094518555905193909201805460ff1916931515939093179092558251848152918201527f4f8fdd35275059eb62763960b423d43f542156eb7fa1c83b9ea0ee07185108c8910160405180910390a150565b5f602082840312156101dd575f5ffd5b503591905056fea2646970667358221220d12018ab44ff221054bdfb8a66ef342a48591bd9c4bf7a6e8e8e656cf150f50c64736f6c63430008220033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/examen2/OraculoGobierno.sol",
+  "buildInfoId": "solc-0_8_34-9fe1413e455e39c25a841697f1b2df435a06ffb9"
+}
